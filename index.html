@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="./bulma.css">
+    <link rel="stylesheet" href="./swatch.min.css">
+    <link rel="stylesheet" href="./main.css">
+
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <aside class="menu navbar-menu" data-active="false" id="menu">
+        <ul class="menu-list">
+            <li><a>Credits</a></li>
+        </ul>
+        <ul class="menu-list">
+            <li><a>Storage</a></li>
+        </ul>
+    </aside>
+    <section class="section">
+        <div class="columns is-flex is-vcentered is-centered">
+            <div class="box column is-two-thirds-mobile is-half-tablet">
+                <div class="select is-primary">
+                    <select>
+                      <option>LiPo</option>
+                      <option>LiHv</option>
+                    </select>
+                  </div>
+                  <input class="input" type="text" placeholder="How many cells (S value)">
+                  <label>Min voltage:</label>
+                  <label>Max voltage:</label>
+                  <label>Storage voltage:</label>
+                  <label>Charge Rate (in A):</label>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+
+            $("#burger").click(function () {
+                $("#menu").data("active", !$("#menu").data('active'));
+                $("#menu").toggleClass('is-active');
+            });
+        });
+    </script>
+</body>
+
+</html>
