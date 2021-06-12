@@ -19,17 +19,20 @@
         <span aria-hidden="true"></span>
     </a>
     <aside class="menu navbar-menu" data-active="false" id="menu">
-        <ul class="menu-list">
+        <ul class="menu-list" id="batteryManagementLink">
             <li><a>Battery Management</a></li>
         </ul>
-        <ul class="menu-list">
-            <li><a>Credits</a></li>
-        </ul>
-        <ul class="menu-list">
+        <ul class="menu-list" id="safteyLink">
             <li><a>Saftey Info</a></li>
         </ul>
+        <ul class="menu-list" id="creditsLink">
+            <li><a>Credits</a></li>
+        </ul>
+        <ul class="menu-list" id="calcLink">
+            <li><a>Calculator</a></li>
+        </ul>
     </aside>
-    <section class="section">
+    <section id="calc" class="section" >
         <div class="columns is-flex is-vcentered is-centered">
             <div class="box column is-two-thirds-mobile is-half-tablet">
                 <div class="select is-primary">
@@ -67,6 +70,9 @@
             </div>
         </div>
     </section>
+    <section id="batteryManagement" class="section" ></section>
+    <section id="credits" class="section"></section>
+    <section id="saftey" class="section"></section>
     <script>
         $(document).ready(function () {
             $("#burger").click(function () {
@@ -105,6 +111,20 @@
             function toTwo(num){
                 return Math.round((num + Number.EPSILON) * 100) / 100
             }
+            
+            function hideAllShowOne(idOfOneToShow){
+                console.log(idOfOneToShow);
+                $("#calc").hide();
+                $("#batteryManagement").hide();
+                $("#credits").hide();
+                $("#saftey").hide();
+                $("#" + idOfOneToShow).show();
+            }
+            
+            $("ul").click(function(){
+                hideAllShowOne($(this).attr("id").replace("Link", ""));
+            })
+
         });
     </script>
 </body>
