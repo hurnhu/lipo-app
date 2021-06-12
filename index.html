@@ -20,36 +20,91 @@
     </a>
     <aside class="menu navbar-menu" data-active="false" id="menu">
         <ul class="menu-list">
+            <li><a>Battery Management</a></li>
+        </ul>
+        <ul class="menu-list">
             <li><a>Credits</a></li>
         </ul>
         <ul class="menu-list">
-            <li><a>Storage</a></li>
+            <li><a>Saftey Info</a></li>
         </ul>
     </aside>
     <section class="section">
         <div class="columns is-flex is-vcentered is-centered">
             <div class="box column is-two-thirds-mobile is-half-tablet">
                 <div class="select is-primary">
-                    <select>
+                    <select id="chem" data-chem="lipo" data-cellVoltage="4.2">
                       <option>LiPo</option>
                       <option>LiHv</option>
                     </select>
                   </div>
-                  <input class="input" type="text" placeholder="How many cells (S value)">
-                  <label>Min voltage:</label>
-                  <label>Max voltage:</label>
-                  <label>Storage voltage:</label>
-                  <label>Charge Rate (in A):</label>
+                  <input id="cells" class="input" type="number" placeholder="How many cells (S value)">
+                  <input id="mah" class="input" type="number" placeholder="Battery cap (in mAh)">
+                  <div>
+                      <label>Min voltage:</label>
+                      <span id="minVolt">
+
+                      </span>
+                  </div>
+                  <div>
+                      <label>Max voltage:</label>
+                      <span id="maxVolt">
+
+                      </span>
+                  </div>
+                  <div>
+                      <label>Storage voltage:</label>
+                      <span id="storVolt">
+
+                      </span>
+                  </div>
+                  <div>
+                      <label>Charge Rate (in A):</label>
+                      <span id="chargeRate">
+
+                      </span>
+                  </div>
             </div>
         </div>
     </section>
     <script>
         $(document).ready(function () {
-
             $("#burger").click(function () {
                 $("#menu").data("active", !$("#menu").data('active'));
                 $("#menu").toggleClass('is-active');
             });
+
+            $("#chem").on('change', function(e){
+                $("#chem").data("chem", e.target.value)
+                if(e.target.value == "LiPo"){
+                    $("#chem").data("cellvoltage", 4.2)
+                } else {
+                    $("#chem").data("cellvoltage", 4.35)
+                }
+                populateBattInfo();
+            })
+
+            $("#cells").on('input', function(e){
+                populateBattInfo();
+            });
+            
+            $("#mah").on('input', function(e){
+                populateBattInfo();
+            });
+
+            function populateBattInfo(){
+                let cells = parseFloat($("#cells").val());
+                if(!isNaN(cells)){
+                    $("#chargeRate").text(toTwo(parseFloat($("#mah").val()) / 1000))
+                    $("#minVolt").text(toTwo(3.5 * parseFloat($("#cells").val())))
+                    $("#maxVolt").text(toTwo(parseFloat($("#chem").data("cellvoltage")) * parseFloat($("#cells").val())))
+                    $("#storVolt").text(toTwo(parseFloat($("#cells").val()) * 3.80))
+                }
+            }
+
+            function toTwo(num){
+                return Math.round((num + Number.EPSILON) * 100) / 100
+            }
         });
     </script>
 </body>
