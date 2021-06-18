@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./swatch.min.css">
     <link rel="stylesheet" href="./main.css">
 
+    <script src="./localforage.js"></script>
     <script src="./jquery.js"></script>
 </head>
 
@@ -204,6 +205,10 @@
                 })
                 battToSave.chem = $("#chemBM").val();
                 savedBatteries = battToSave;
+
+                localforage.setItem("test1" ,1 );
+                localforage.setItem("test12" ,13 );
+                localforage.setItem("test13" ,12 );
 
                 battToSave = {}
             });
