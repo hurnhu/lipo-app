@@ -13,110 +13,135 @@
 </head>
 
 <body>
-<a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false">
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-</a>
-<aside class="menu navbar-menu" data-active="false" id="menu">
-    <!-- <ul class="menu-list" id="batteryManagementLink">
-        <li><a>Battery Management</a></li>
-    </ul> -->
-    <ul class="menu-list" id="calcLink">
-        <li><a>Calculator</a></li>
-    </ul>
-    <ul class="menu-list" id="safteyLink">
-        <li><a>Safety Info</a></li>
-    </ul>
-    <ul class="menu-list" id="creditsLink">
-        <li><a>Credits</a></li>
-    </ul>
-</aside>
-<section id="calc" class="section">
-    <div class="columns is-flex is-vcentered is-centered">
-        <div class="box column is-two-thirds is-half-tablet">
-            <div class="select is-primary">
-                <select id="chem" data-chem="lipo" data-cellVoltage="4.2">
-                    <option>LiPo</option>
-                    <option>LiHv</option>
-                </select>
-            </div>
-            <input id="cells" class="input" type="number" placeholder="How many cells (S value)">
-            <input id="mah" class="input" type="number" placeholder="Battery cap (in mAh)">
-            <div>
-                <label>Min voltage:</label>
-                <span id="minVolt">
-
-                    </span>
-            </div>
-            <div>
-                <label>Max voltage:</label>
-                <span id="maxVolt">
-
-                    </span>
-            </div>
-            <div>
-                <label>Storage voltage:</label>
-                <span id="storVolt">
-
-                    </span>
-            </div>
-            <div>
-                <label>Charge Rate (in A):</label>
-                <span id="chargeRate">
-
-                    </span>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="batteryManagement" class="section"></section>
-<section id="credits" class="section">
-    <p class="columns is-flex is-vcentered is-centered">Hate ads? So do we, keep our app free by donating a cup of
-        coffee to the devs.</p>
-    <div class="tile is-ancestor columns is-flex is-vcentered is-centered">
-        <div class="tile is-vertical is-8">
-            <div class="tile">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification is-info">
-                        <p class="title">Michael LaPan</p>
-                        <p class="subtitle">UI/UX/Calculator</p>
-                        <a href="https://www.buymeacoffee.com/michaellapan">
-                            <figure class="image is-4by2">
-                                <img href="https://www.buymeacoffee.com/michaellapan"
-                                     src="https://img.buymeacoffee.com/api/?url=aHR0cHM6Ly9pbWcuYnV5bWVhY29mZmVlLmNvbS9hcGkvP25hbWU9bWljaGFlbGxhcGFuJnNpemU9MzAwJmJnLWltYWdlPWJtYyZiYWNrZ3JvdW5kPQ==&creator=michaellapan&design_code=1&design_color=%23BD5FFF&slug=michaellapan">
-                            </figure>
-                        </a>
-                    </article>
+    <a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <aside class="menu navbar-menu" data-active="false" id="menu">
+        <!-- condensed this to for loop -->
+    </aside>
+    <section id="calc" class="section">
+        <div class="columns is-flex is-vcentered is-centered">
+            <div class="box column is-two-thirds is-half-tablet">
+                <div class="select is-primary">
+                    <select id="chem" data-chem="lipo" data-cellVoltage="4.2">
+                        <option>LiPo</option>
+                        <option>LiHv</option>
+                    </select>
+                </div>
+                <input id="cells" class="input" type="number" placeholder="How many cells (S value)">
+                <input id="mah" class="input" type="number" placeholder="Battery cap (in mAh)">
+                <div>
+                    <label>Min voltage:</label>
+                    <span id="minVolt"></span>
+                </div>
+                <div>
+                    <label>Max voltage:</label>
+                    <span id="maxVolt"></span>
+                </div>
+                <div>
+                    <label>Storage voltage:</label>
+                    <span id="storVolt"></span>
+                </div>
+                <div>
+                    <label>Charge Rate (in A):</label>
+                    <span id="chargeRate"></span>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section id="saftey" class="section">
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                Battery Charging
-            </p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <p>LiPos should never be charged above 4.2 per cell.</p>
-                <p>LiHv should never be charged above 4.25 per cell.</p>
-                <p>charging past that can damage individual cells and can cause a fire.</p>
-                <p>LiPos should never be discharged past 3.5 per cell</p>
-                <p>LiPos should never be left at full charge for multiple days. It both degrades the battery and is
-                    a fire hazzard</p>
-                <p>When not in use LiPos should be stored at/around 3.8 per cell</p>
-                <p>LiPos should be stored in a LiPo bag when not in use</p>
+    </section>
+    <section id="batteryManagement" class="section">
+        <div class="columns is-flex is-vcentered is-centered">
+            <div class="box column is-two-thirds is-half-tablet" id="bmNew">
+                <h3>Add new battery</h3>
+                <div class="select is-primary">
+                    <select id="chemBM" data-chem="lipo">
+                        <option>LiPo</option>
+                        <option>LiHv</option>
+                    </select>
+                </div>
+                <input id="cellsBM" class="input" type="number" placeholder="How many cells (S value)">
+                <input id="mahBM" class="input" type="number" placeholder="Battery cap (in mAh)">
+                <input id="nameBM" class="input" type="text" placeholder="Battery name">
+                <input id="battDateBM" class="input" type="date" placeholder="Bought Date">
+                <input id="initiallIrBM" class="input" type="number" placeholder="Initial Internal Resistance">
+                <button class="button" id="saveBattery">Save Battery</button>
             </div>
         </div>
-    </div>
-</section>
-<script>
+        <div class="columns is-flex is-vcentered is-centered">
+            <div class="box column is-two-thirds is-half-tablet">
+                Exsisting batteries go here
+            </div>
+        </div>
+    </section>
+    <section id="credits" class="section">
+        <p class="columns is-flex is-vcentered is-centered">Hate ads? So do we, keep our app free by donating a cup of
+            coffee to the devs.</p>
+        <div class="tile is-ancestor columns is-flex is-vcentered is-centered">
+            <div class="tile is-vertical is-8">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-info">
+                            <p class="title">Michael LaPan</p>
+                            <p class="subtitle">UI/UX/Calculator</p>
+                            <a href="https://www.buymeacoffee.com/michaellapan">
+                                <figure class="image is-4by2">
+                                    <img href="https://www.buymeacoffee.com/michaellapan"
+                                        src="https://img.buymeacoffee.com/api/?url=aHR0cHM6Ly9pbWcuYnV5bWVhY29mZmVlLmNvbS9hcGkvP25hbWU9bWljaGFlbGxhcGFuJnNpemU9MzAwJmJnLWltYWdlPWJtYyZiYWNrZ3JvdW5kPQ==&creator=michaellapan&design_code=1&design_color=%23BD5FFF&slug=michaellapan">
+                                </figure>
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="saftey" class="section">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Battery Charging
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p>LiPos should never be charged above 4.2 per cell.</p>
+                    <p>LiHv should never be charged above 4.25 per cell.</p>
+                    <p>charging past that can damage individual cells and can cause a fire.</p>
+                    <p>LiPos should never be discharged past 3.2 per cell. Its safest to land at 3.5</p>
+                    <p>LiPos should never be left at full charge for multiple days. It both degrades the battery and is
+                        a fire hazzard</p>
+                    <p>When not in use LiPos should be stored at/around 3.8 per cell</p>
+                    <p>LiPos should be stored in a LiPo bag when not in use</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
         $(document).ready(function () {
+
+            let menuArry = [
+                { id: "batteryManagementLink", text: "Battery Management" },
+                { id: "calcLink", text: "Calculator" },
+                { id: "safteyLink", text: "Safety Info" },
+                { id: "creditsLink", text: "Credits" }
+            ];
+
+            //adds in menu items
+            for (let index = 0; index < menuArry.length; index++) {
+                let ulEL = $("<ul>")
+                    .addClass("menu-list")
+                    .attr("id", menuArry[index].id);
+                let liEl = $("<li>");
+                let aEl = $("<a>").text(menuArry[index].text);
+                liEl.append(aEl)
+                ulEL.append(liEl);
+                $("#menu").append(ulEL);
+            }
+
             hideAllShowOne("calc");
+
             $("#burger").click(function () {
                 $("#menu").data("active", !$("#menu").data('active'));
                 $("#menu").toggleClass('is-active');
@@ -162,10 +187,26 @@
                 $("#" + idOfOneToShow).show();
             }
 
+            //menu system
             $("ul").click(function () {
                 hideAllShowOne($(this).attr("id").replace("Link", ""));
             })
 
+            //battery management logic
+
+            //get data from inputs and plop it into the savedBatt array
+            let savedBatteries = [];
+            $("#saveBattery").click(function(){
+                let battToSave = {};
+                $("#bmNew").find("input").each(function(){
+                    battToSave[this.id.replace('BM', '')] = this.value;
+                    this.value = '';
+                })
+                battToSave.chem = $("#chemBM").val();
+                savedBatteries = battToSave;
+
+                battToSave = {}
+            });
         });
     </script>
 </body>
