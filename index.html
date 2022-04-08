@@ -68,15 +68,38 @@
                 <input id="battDateBM" class="input" type="date" placeholder="Bought Date">
                 <input id="initiallIrBM" class="input" type="number" placeholder="Initial Internal Resistance">
                 <button class="button" id="saveBattery">Save Battery</button>
+                <button class="button" id="updateBattery" data-id="">Update Battery</button>
             </div>
         </div>
         <div class="columns is-flex is-vcentered is-centered">
-            <div class="box column is-two-thirds is-half-tablet">
-                Exsisting batteries go here
+            <div id="savedBatteriesDisplay" class="box column is-two-thirds is-half-tablet">
+
             </div>
         </div>
     </section>
     <section id="credits" class="section">
+        <p class="columns is-flex is-vcentered is-centered">Hate ads? So do we, keep our app free by donating a cup of
+            coffee to the devs.</p>
+        <div class="tile is-ancestor columns is-flex is-vcentered is-centered">
+            <div class="tile is-vertical is-8">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-info">
+                            <p class="title">Michael LaPan</p>
+                            <p class="subtitle">UI/UX/Calculator</p>
+                            <a href="https://www.buymeacoffee.com/michaellapan">
+                                <figure class="image is-4by2">
+                                    <img href="https://www.buymeacoffee.com/michaellapan"
+                                        src="https://img.buymeacoffee.com/api/?url=aHR0cHM6Ly9pbWcuYnV5bWVhY29mZmVlLmNvbS9hcGkvP25hbWU9bWljaGFlbGxhcGFuJnNpemU9MzAwJmJnLWltYWdlPWJtYyZiYWNrZ3JvdW5kPQ==&creator=michaellapan&design_code=1&design_color=%23BD5FFF&slug=michaellapan">
+                                </figure>
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="models" class="section">
         <p class="columns is-flex is-vcentered is-centered">Hate ads? So do we, keep our app free by donating a cup of
             coffee to the devs.</p>
         <div class="tile is-ancestor columns is-flex is-vcentered is-centered">
@@ -126,7 +149,8 @@
                 { id: "batteryManagementLink", text: "Battery Management" },
                 { id: "calcLink", text: "Calculator" },
                 { id: "safteyLink", text: "Safety Info" },
-                { id: "creditsLink", text: "Credits" }
+                { id: "creditsLink", text: "Credits" },
+                { id: "modelsLink", text: "Models" }
             ];
 
             //adds in menu items
@@ -146,6 +170,28 @@
             $("#burger").click(function () {
                 $("#menu").data("active", !$("#menu").data('active'));
                 $("#menu").toggleClass('is-active');
+            });
+
+            $("#updateBattery").click(function () {
+                let idToFind = $(this).data("id");
+                localforage.getItem('savedBatteries').then(function(value) {
+                    let savedBatteriesToSave = [];
+                    // This code runs once the value has been loaded
+                    // from the offline store.
+                    if(value !== null){
+                        value.forEach(element => {
+                            if(value.id == idToFind){
+                                savedBatteriesToSave.push(getBattData())
+                            } else {
+                                savedBatteriesToSave.push(value)
+                            }
+                        });
+                    }
+                    setBattData(savedBatteriesToSave)
+                }).catch(function(err) {
+                    // This code runs if there were any errors
+                    console.log(err);
+                });    
             });
 
             $("#chem").on('change', function (e) {
@@ -185,9 +231,62 @@
                 $("#batteryManagement").hide();
                 $("#credits").hide();
                 $("#saftey").hide();
+                $("#models").hide();
                 $("#" + idOfOneToShow).show();
             }
 
+            let savedBatteries = [];
+            getSavedBatts();
+            function getSavedBatts(){
+                localforage.getItem('savedBatteries').then(function(value) {
+                
+                    savedBatteries = value;
+                    console.log(savedBatteries)
+
+                }).catch(function(err) {
+                    // This code runs if there were any errors
+                    console.log(err);
+                });   
+            }
+            function getAndLoadSavedBatts(){
+                localforage.getItem('savedBatteries').then(function(value) {
+                    // This code runs once the value has been loaded
+                    // from the offline store.
+                    if(value !== null){
+                        value.forEach(element => {
+                            let outterDiv = $("<div>", {"class": "card"});
+                            let innerDiv = $("<div>", {"class": "card-content"});
+                            let mediaDiv = $("<div>", {"class": "media"});
+                            let mediaContentDiv = $("<div>", {"class": "media-content"});
+                            let mediaContentPDiv = $("<p>", {"class": "title is-4"}).text(element.name);
+                            let content = $("<div>", {"class": "content"});
+                            let contentPBattInfo = $("<p>", {"class": "title is-4"}).text(element.cells + "s " + element.chem + " | " + element.mah + "mAh");
+                            let editButton = $("<button>", {id: "savedBatteryEdit", "class": "button", "data-id": element.id}).text("EDIT");
+                            
+                            content.prepend(editButton);
+                            content.prepend(contentPBattInfo);
+                            innerDiv.prepend(content);
+
+                            mediaContentDiv.prepend(mediaContentPDiv)
+                            innerDiv.prepend(mediaContentDiv)
+
+                            outterDiv.prepend(innerDiv);
+                            $("#savedBatteriesDisplay").prepend(outterDiv)
+                        });
+                        $("#savedBatteryEdit").click(function () {
+                            $("#updateBattery").show();
+                            $("#saveBattery").hide();
+                            $("#updateBattery").data("id", $(this).data("id"))
+                        });
+                    }
+
+                }).catch(function(err) {
+                    // This code runs if there were any errors
+                    console.log(err);
+                });                
+            }
+
+            getAndLoadSavedBatts();
             //menu system
             $("ul").click(function () {
                 hideAllShowOne($(this).attr("id").replace("Link", ""));
@@ -195,23 +294,37 @@
 
             //battery management logic
 
-            //get data from inputs and plop it into the savedBatt array
-            let savedBatteries = [];
-            $("#saveBattery").click(function(){
+            function getBattData(){
                 let battToSave = {};
                 $("#bmNew").find("input").each(function(){
                     battToSave[this.id.replace('BM', '')] = this.value;
                     this.value = '';
                 })
+                battToSave.id = savedBatteries.length + 1
                 battToSave.chem = $("#chemBM").val();
-                savedBatteries = battToSave;
+                return battToSave;
+            }
 
-                localforage.setItem("test1" ,1 );
-                localforage.setItem("test12" ,13 );
-                localforage.setItem("test13" ,12 );
 
-                battToSave = {}
+            function setBattData(dataToSet){
+                localforage.setItem('savedBatteries', dataToSet).then(function(value) {
+                    // This will output `1`.
+                    console.log(value[0]);
+                    getAndLoadSavedBatts();
+                }).catch(function(err) {
+                    // This code runs if there were any errors
+                    console.log(err);
+                });
+            }
+            //get data from inputs and plop it into the savedBatt array
+            $("#saveBattery").click(function(){
+                if(savedBatteries === null){
+                    savedBatteries = []
+                }
+                savedBatteries.push(getBattData());
+                setBattData(savedBatteries)
             });
+            $("#updateBattery").hide();
         });
     </script>
 </body>
