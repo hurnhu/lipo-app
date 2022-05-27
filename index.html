@@ -167,6 +167,11 @@
 
             hideAllShowOne("calc");
 
+            function clearBatts(){
+                $("#savedBatteriesDisplay").empty();
+            }
+
+            hideAllShowOne("batteryManagement");
             $("#burger").click(function () {
                 $("#menu").data("active", !$("#menu").data('active'));
                 $("#menu").toggleClass('is-active');
@@ -180,14 +185,18 @@
                     // from the offline store.
                     if(value !== null){
                         value.forEach(element => {
-                            if(value.id == idToFind){
-                                savedBatteriesToSave.push(getBattData())
+                            if(element.id == idToFind){
+                                savedBatteriesToSave.push(getBattData(true, idToFind))
                             } else {
-                                savedBatteriesToSave.push(value)
+                                savedBatteriesToSave.push(element)
                             }
                         });
                     }
-                    setBattData(savedBatteriesToSave)
+                    clearBatts();
+                    setBattData(savedBatteriesToSave);
+
+                    $("#updateBattery").hide();
+                    $("#saveBattery").show();
                 }).catch(function(err) {
                     // This code runs if there were any errors
                     console.log(err);
@@ -276,7 +285,16 @@
                         $("#savedBatteryEdit").click(function () {
                             $("#updateBattery").show();
                             $("#saveBattery").hide();
-                            $("#updateBattery").data("id", $(this).data("id"))
+                            $("#updateBattery").data("id", $(this).data("id"));
+
+                            let foundBatt = savedBatteries[$(this).data("id") - 1];
+
+                            $("#chemBM").val(foundBatt.chem);
+                            $("#cellsBM").val(foundBatt.cells);
+                            $("#mahBM").val(foundBatt.mah);
+                            $("#nameBM").val(foundBatt.name);
+                            $("#battDateBM").val(foundBatt.battDate);
+                            $("#initiallIrBM").val(foundBatt.initiallIr);
                         });
                     }
 
@@ -294,13 +312,17 @@
 
             //battery management logic
 
-            function getBattData(){
+            function getBattData(update, id){
                 let battToSave = {};
                 $("#bmNew").find("input").each(function(){
                     battToSave[this.id.replace('BM', '')] = this.value;
                     this.value = '';
                 })
-                battToSave.id = savedBatteries.length + 1
+                if(!update){
+                    battToSave.id = savedBatteries.length + 1
+                } else {
+                    battToSave.id = id;
+                }
                 battToSave.chem = $("#chemBM").val();
                 return battToSave;
             }
