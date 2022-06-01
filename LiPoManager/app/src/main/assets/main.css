@@ -1,0 +1,18 @@
+is-vcentered {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center; /* used this for multiple child */
+    align-items: center; /* if an only child */
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
